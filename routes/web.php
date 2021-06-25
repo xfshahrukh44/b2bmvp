@@ -27,10 +27,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
     // Login & Registration
     Route::get('/login', 'Auth\LoginController@showLoginForm');
     Route::get('/register', 'Auth\RegisterController@showRegisterForm');
-    Route::post('/login', 'Auth\LoginController@login');
-    Route::post('/register', 'Auth\RegisterController@create');
+    Route::post('/login', 'Auth\LoginController@login')->name('admin.login');
+    Route::post('/register', 'Auth\RegisterController@create')->name('admin.register');
+    Route::post('/logout', 'Auth\LoginController@adminLogout')->name('admin.logout');
 
-    Route::group(['middleware' => 'auth:admin'], function(){
+    Route::group(['middleware' => ['auth:admin', 'role:admin']], function(){
         Route::get('/', 'DashboardController@index');
         Route::get('/approve_seller', 'SellerController@approve_seller')->name('approve_seller');
         Route::get('/reject_seller', 'SellerController@reject_seller')->name('reject_seller');
@@ -42,8 +43,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Buyer'], function(){
     // Login & Registration
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::get('/register', 'Auth\RegisterController@showRegisterForm')->name('register');
-    Route::post('/login', 'Auth\LoginController@login');
-    Route::post('/register', 'Auth\RegisterController@create');
+    Route::post('/login', 'Auth\LoginController@login')->name('buyer.login');
+    Route::post('/register', 'Auth\RegisterController@create')->name('buyer.register');
+    Route::post('/logout', 'Auth\LoginController@buyerLogout')->name('buyer.logout');
 
     // Forgot/Reset Password
     Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('buyer.password.request');                                     
@@ -61,8 +63,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Seller', 'prefix' => 'seller'
     // Login & Registration
     Route::get('/login', 'Auth\LoginController@showLoginForm');
     Route::get('/register', 'Auth\RegisterController@showRegisterForm');
-    Route::post('/login', 'Auth\LoginController@login');
-    Route::post('/register', 'Auth\RegisterController@create');
+    Route::post('/login', 'Auth\LoginController@login')->name('seller.login');
+    Route::post('/register', 'Auth\RegisterController@create')->name('seller.register');
+    Route::post('/logout', 'Auth\LoginController@sellerLogout')->name('seller.logout');
 
     // Forgot/Reset Password
     Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('seller.password.request');                                     
@@ -70,7 +73,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Seller', 'prefix' => 'seller'
     Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('seller.password.email');
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('seller.password.update');
 
-    Route::group(['middleware' => ['auth:seller', 'verified', 'seller.is_approved']], function(){
+    Route::group(['middleware' => ['auth:seller', 'role:seller', 'verified', 'seller.is_approved']], function(){
         Route::get('/', 'DashboardController@index');
     });
 });

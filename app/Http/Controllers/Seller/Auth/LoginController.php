@@ -16,7 +16,7 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:seller')->except('logout');
+        $this->middleware('guest:seller')->except('sellerLogout');
     }
 
     public function showLoginForm()
@@ -33,8 +33,19 @@ class LoginController extends Controller
     
         if (Auth::guard('seller')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
     
-            return redirect()->intended('/seller');
+            // return redirect()->intended('/seller');
+            return redirect('/seller');
         }
         return redirect()->back()->withInput($request->only('email', 'remember'));
+    }
+
+    public function sellerLogout(Request $request)
+    {
+        // dd($request->all());
+        Auth::guard('seller')->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/seller/login');
     }
 }

@@ -47,6 +47,8 @@ class RegisterController extends Controller
             'phone' => $request['phone'],
             'password' => Hash::make($request['password']),
         ]);
-        return redirect()->intended('/admin/login');
+        $admin->assignRole('admin');
+        // return redirect()->intended('/admin/login');
+        return redirect('/admin/login');
     }
 }

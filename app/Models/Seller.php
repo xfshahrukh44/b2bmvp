@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\Seller\SellerResetPasswordNotification;
+use Spatie\Permission\Traits\HasRoles;
 
 class Seller extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasFactory, SoftDeletes;
+    use Notifiable, HasFactory, SoftDeletes, HasRoles;
 
     protected $guard = 'seller';
 

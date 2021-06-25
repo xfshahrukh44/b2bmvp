@@ -50,6 +50,8 @@ class RegisterController extends Controller
             'is_verified' => 1,
         ]);
         event(new Registered($buyer));
-        return redirect()->intended('/login');
+        $buyer->assignRole('buyer');
+        // return redirect()->intended('/login');
+        return redirect('/login');
     }
 }

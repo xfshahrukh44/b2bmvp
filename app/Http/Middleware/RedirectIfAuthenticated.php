@@ -33,6 +33,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if ($guard == "admin" && Auth::guard($guard)->check()) {
+            // dd($guard);
             return redirect('/admin');
         }
         if ($guard == "buyer" && Auth::guard($guard)->check()) {

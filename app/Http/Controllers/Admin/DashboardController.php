@@ -11,7 +11,6 @@ class DashboardController extends Controller
     public function __construct(SellerService $sellerService)
     {
         $this->sellerService = $sellerService;
-        $this->middleware('auth:admin');
     }
 
     public function index(Request $request)

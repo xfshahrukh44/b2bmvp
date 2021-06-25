@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use DB;
 use Hash;
+use App\Models\Admin;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +16,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // roles
+        DB::table('roles')->insert([
+            'name' => 'admin',
+            'guard_name' => 'admin',
+        ]);
+        DB::table('roles')->insert([
+            'name' => 'buyer',
+            'guard_name' => 'buyer',
+        ]);
+        DB::table('roles')->insert([
+            'name' => 'seller',
+            'guard_name' => 'seller',
+        ]);
+        
+        // admins
         DB::table('admins')->insert([
             'first_name' => 'Admin',
             'last_name' => 'Admin',
@@ -22,6 +38,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('temp'),
             'phone' => '12345678',
         ]);
+        $admin = Admin::find(1);
+        $admin->assignRole('admin');
 
         // \App\Models\User::factory(10)->create();
     }

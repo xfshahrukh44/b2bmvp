@@ -26,6 +26,7 @@ class CreateBuyersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('otp')->nullable();
             $table->integer('is_verified')->nullable()->default(0);
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

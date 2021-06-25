@@ -29,6 +29,7 @@ class CreateSellersTable extends Migration
             $table->string('otp')->nullable();
             $table->integer('is_verified')->nullable()->default(0);
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\Buyer\BuyerResetPasswordNotification;
 
 class Buyer extends Authenticatable implements MustVerifyEmail
 {
@@ -27,7 +28,13 @@ class Buyer extends Authenticatable implements MustVerifyEmail
         'otp',
         'is_verified',
         'email_verified_at',
+        'remember_token',
     ];
     
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new BuyerResetPasswordNotification($token));
+    }
 }

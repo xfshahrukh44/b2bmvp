@@ -24,6 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Admin | admin
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'], function(){
+    // Login & Registration
     Route::get('/login', 'Auth\LoginController@showLoginForm');
     Route::get('/register', 'Auth\RegisterController@showRegisterForm');
     Route::post('/login', 'Auth\LoginController@login');
@@ -38,10 +39,17 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
 
 // Buyer | buyer
 Route::group(['namespace' => 'App\Http\Controllers\Buyer'], function(){
+    // Login & Registration
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::get('/register', 'Auth\RegisterController@showRegisterForm')->name('register');
     Route::post('/login', 'Auth\LoginController@login');
     Route::post('/register', 'Auth\RegisterController@create');
+
+    // Forgot/Reset Password
+    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('buyer.password.request');                                     
+    Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('buyer.password.reset');
+    Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('buyer.password.email');
+    Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('buyer.password.update');
 
     Route::group(['middleware' => ['auth:buyer', 'verified']], function(){
         Route::get('/', 'DashboardController@index');
@@ -50,10 +58,17 @@ Route::group(['namespace' => 'App\Http\Controllers\Buyer'], function(){
 
 // Seller | seller
 Route::group(['namespace' => 'App\Http\Controllers\Seller', 'prefix' => 'seller'], function(){
+    // Login & Registration
     Route::get('/login', 'Auth\LoginController@showLoginForm');
     Route::get('/register', 'Auth\RegisterController@showRegisterForm');
     Route::post('/login', 'Auth\LoginController@login');
     Route::post('/register', 'Auth\RegisterController@create');
+
+    // Forgot/Reset Password
+    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('seller.password.request');                                     
+    Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('seller.password.reset');
+    Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('seller.password.email');
+    Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('seller.password.update');
 
     Route::group(['middleware' => ['auth:seller', 'verified', 'seller.is_approved']], function(){
         Route::get('/', 'DashboardController@index');

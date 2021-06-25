@@ -36,7 +36,7 @@ class RedirectIfAuthenticated
             return redirect('/admin');
         }
         if ($guard == "buyer" && Auth::guard($guard)->check()) {
-            return redirect('/buyer');
+            return redirect('/');
         }
         if ($guard == "seller" && Auth::guard($guard)->check()) {
             return redirect('/seller');

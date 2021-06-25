@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
             return redirect()->guest('/admin/login');
         }
         if ($request->is('buyer') || $request->is('buyer/*')) {
-            return redirect()->guest('/buyer/login');
+            return redirect()->guest('/login');
         }
         if ($request->is('seller') || $request->is('seller/*')) {
             return redirect()->guest('/seller/login');

@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Buyer Register') }}</div
 
                 <div class="card-body">
-                    <form method="POST" action='{{ url("buyer/register") }}' aria-label="{{ __('Register') }}">
+                    <form method="POST" action='{{ url("register") }}' aria-label="{{ __('Register') }}">
                         @csrf
                         
                         <!-- First Name | first_name -->

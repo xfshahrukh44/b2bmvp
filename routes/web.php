@@ -37,9 +37,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
 });
 
 // Buyer | buyer
-Route::group(['namespace' => 'App\Http\Controllers\Buyer', 'prefix' => 'buyer'], function(){
-    Route::get('/login', 'Auth\LoginController@showLoginForm');
-    Route::get('/register', 'Auth\RegisterController@showRegisterForm');
+Route::group(['namespace' => 'App\Http\Controllers\Buyer'], function(){
+    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::get('/register', 'Auth\RegisterController@showRegisterForm')->name('register');
     Route::post('/login', 'Auth\LoginController@login');
     Route::post('/register', 'Auth\RegisterController@create');
 

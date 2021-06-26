@@ -52,6 +52,16 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
+        
+        'public_sellers' => [
+            'driver' => 'local',
+            'root' => public_path('img/sellers'),
+        ],
+        
+        'public_companies' => [
+            'driver' => 'local',
+            'root' => public_path('img/companies'),
+        ],
 
     ],
 

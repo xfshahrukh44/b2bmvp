@@ -23,7 +23,6 @@ class Seller extends Authenticatable implements MustVerifyEmail
         'profile_picture',
         'company_name',
         'company_logo',
-        'business_address',
         'account_status',
         'is_approved',
         'email',
@@ -33,6 +32,7 @@ class Seller extends Authenticatable implements MustVerifyEmail
         'is_verified',
         'email_verified_at',
         'remember_token',
+        'slug',
     ];
     
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -40,5 +40,22 @@ class Seller extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new SellerResetPasswordNotification($token));
+    }
+
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($query) {
+            $query->slug = get_seller_slug($query);
+            $query->saveQuietly();
+        });
     }
 }

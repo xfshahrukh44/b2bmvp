@@ -20,7 +20,6 @@ class CreateSellersTable extends Migration
             $table->string('profile_picture')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_logo')->nullable();
-            $table->string('business_address')->nullable();
             $table->integer('account_status')->nullable()->default(0);
             $table->integer('is_approved')->nullable();
             $table->string('email')->unique();
@@ -30,6 +29,7 @@ class CreateSellersTable extends Migration
             $table->integer('is_verified')->nullable()->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('remember_token', 100)->nullable();
+            $table->string('slug')->nullable()->unique();
             $table->timestamps();
             $table->softDeletes();
         });

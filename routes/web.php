@@ -38,7 +38,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('admin.password.update');
 
     Route::group(['middleware' => ['auth:admin', 'role:admin']], function(){
+        // Dashboard
         Route::get('/', 'DashboardController@index');
+
+        // seller
+        Route::get('/add_seller', 'SellerController@add_seller')->name('add_seller');
+        Route::post('/create_seller', 'SellerController@create_seller')->name('create_seller');
         Route::get('/approve_seller', 'SellerController@approve_seller')->name('approve_seller');
         Route::get('/reject_seller', 'SellerController@reject_seller')->name('reject_seller');
     });

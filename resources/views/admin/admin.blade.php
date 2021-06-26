@@ -16,7 +16,10 @@
             <!-- Sellers -->
             <div class="col-md-8 mt-4">
                 <div class="card">
-                    <div class="card-header">Sellers</div>
+                    <div class="card-header">
+                        <div class="float-left">Sellers</div>
+                        <div class="float-right"><a type="button" class="btn btn-sm btn-secondary btn_add_seller" href="{{route('add_seller')}}">Add Seller</a></div>
+                    </div>
 
                     <div class="card-body">
                         <table class="table table-sm table-bordered table-striped">

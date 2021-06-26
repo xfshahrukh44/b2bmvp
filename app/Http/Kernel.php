@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'buyer.verified' => \App\Http\Middleware\BuyerEmailIsVerified::class,
         'seller.is_approved' => \App\Http\Middleware\Seller\SellerIsApproved::class,
+        'seller.is_active' => \App\Http\Middleware\Seller\SellerIsActivated::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,

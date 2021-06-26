@@ -10,9 +10,13 @@ use Illuminate\Support\Str;
 use Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Carbon\Carbon;
 
 class SellerController extends Controller
 {
+    use RegistersUsers;
+
     public function __construct(SellerService $sellerService)
     {
         $this->sellerService = $sellerService;
@@ -58,6 +62,9 @@ class SellerController extends Controller
 
         // password hashing
         $req['password'] = Hash::make($req['password']);
+
+        // email_verified_at
+        $req['email_verified_at'] = Carbon::now();
 
         // create seller
         $seller = ($this->sellerService->create($req))['seller']['seller'];

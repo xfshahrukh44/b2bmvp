@@ -9,7 +9,7 @@ function return_date($date)
 }
 
 function get_slug($string){
-    return preg_replace('/\s+/', '_', $string);
+    return strtolower(preg_replace('/\s+/', '_', $string));
 }
 
 function get_seller_slug($query){

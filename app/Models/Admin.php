@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\Admin\AdminResetPasswordNotification;
 
 class Admin extends Authenticatable
 {
@@ -25,4 +26,9 @@ class Admin extends Authenticatable
     ];
     
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new AdminResetPasswordNotification($token));
+    }
 }

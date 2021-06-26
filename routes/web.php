@@ -31,6 +31,12 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
     Route::post('/register', 'Auth\RegisterController@create')->name('admin.register');
     Route::post('/logout', 'Auth\LoginController@adminLogout')->name('admin.logout');
 
+    // Forgot/Reset Password
+    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+    Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('admin.password.reset');
+    Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+    Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('admin.password.update');
+
     Route::group(['middleware' => ['auth:admin', 'role:admin']], function(){
         Route::get('/', 'DashboardController@index');
         Route::get('/approve_seller', 'SellerController@approve_seller')->name('approve_seller');
@@ -48,7 +54,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Buyer'], function(){
     Route::post('/logout', 'Auth\LoginController@buyerLogout')->name('buyer.logout');
 
     // Forgot/Reset Password
-    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('buyer.password.request');                                     
+    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('buyer.password.request');
     Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('buyer.password.reset');
     Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('buyer.password.email');
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('buyer.password.update');
@@ -68,7 +74,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Seller', 'prefix' => 'seller'
     Route::post('/logout', 'Auth\LoginController@sellerLogout')->name('seller.logout');
 
     // Forgot/Reset Password
-    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('seller.password.request');                                     
+    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('seller.password.request');
     Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('seller.password.reset');
     Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('seller.password.email');
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('seller.password.update');

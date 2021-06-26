@@ -1,66 +1,126 @@
 <!-- First Name | first_name -->
 <div class="form-group col-md-4">
     <label>First Name</label>
-    <input type="text" class="form-control first_name" name="first_name">
+    <input type="text" class="form-control first_name @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}">
+
+    @error('first_name')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Last Name | last_name -->
 <div class="form-group col-md-4">
     <label>Last Name</label>
-    <input type="text" class="form-control last_name" name="last_name">
+    <input type="text" class="form-control last_name @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}">
+
+    @error('last_name')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Profile Picture | profile_picture -->
 <div class="form-group col-md-4">
     <label for="">Profile Picture</label>
-    <input type="file" name="profile_picture" class="form-control profile_picture">
+    <input type="file" name="profile_picture" class="form-control profile_picture @error('profile_picture') is-invalid @enderror" value="{{ old('profile_picture') }}">
+
+    @error('profile_picture')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Email | email -->
 <div class="form-group col-md-4">
     <label>Email</label>
-    <input type="text" class="form-control email" name="email">
+    <input type="email" class="form-control email @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+
+    @error('email')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Phone | phone -->
 <div class="form-group col-md-4">
     <label>Phone</label>
-    <input type="text" class="form-control phone" name="phone">
+    <input type="text" class="form-control phone @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}">
+
+    @error('phone')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Password | password -->
 <div class="form-group col-md-4">
     <label>Password</label>
-    <input type="password" class="form-control password" name="password">
+    <input type="password" class="form-control password @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}">
+
+    @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Company Name | company_name -->
 <div class="form-group col-md-6">
     <label>Company Name</label>
-    <input type="text" class="form-control company_name" name="company_name">
+    <input type="text" class="form-control company_name @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}">
+
+    @error('company_name')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Company Logo | company_logo -->
 <div class="form-group col-md-6">
     <label for="">Company Logo</label>
-    <input type="file" name="company_logo" class="form-control company_logo">
+    <input type="file" class="form-control company_logo @error('company_logo') is-invalid @enderror" name="company_logo" value="{{ old('company_logo') }}">
+
+    @error('company_logo')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Account Status | account_status -->
 <div class="form-group col-md-6">
     <label for="">Account Status</label>
-    <select name="account_status" class="form-control account_status">
+    <select class="form-control account_status @error('account_status') is-invalid @enderror" name="account_status" value="{{ old('account_status') }}">
         <option value="0">Inactive</option>
         <option value="1">Active</option>
     </select>
+
+    @error('account_status')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>
 
 <!-- Approval Status | is_approved -->
 <div class="form-group col-md-6">
     <label for="">Approval Status</label>
-    <select name="is_approved" class="form-control is_approved">
+    <select class="form-control is_approved @error('is_approved') is-invalid @enderror" name="is_approved" value="{{ old('is_approved') }}">
         <option value="">Pending Approval</option>
         <option value="0">Rejected</option>
         <option value="1">Approved</option>
     </select>
+
+    @error('is_approved')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
 </div>

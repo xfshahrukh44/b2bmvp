@@ -46,6 +46,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
         Route::post('/create_seller', 'SellerController@create_seller')->name('create_seller');
         Route::get('/approve_seller', 'SellerController@approve_seller')->name('approve_seller');
         Route::get('/reject_seller', 'SellerController@reject_seller')->name('reject_seller');
+        Route::get('/activate_seller', 'SellerController@activate_seller')->name('activate_seller');
+        Route::get('/deactivate_seller', 'SellerController@deactivate_seller')->name('deactivate_seller');
     });
 });
 

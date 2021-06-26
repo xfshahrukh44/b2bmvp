@@ -86,4 +86,18 @@ class SellerController extends Controller
             'is_approved' => 0
         ], $request['seller_id']);
     }
+
+    public function activate_seller(Request $request)
+    {
+        return $this->sellerService->update([
+            'account_status' => 1
+        ], $request['seller_id']);
+    }
+
+    public function deactivate_seller(Request $request)
+    {
+        return $this->sellerService->update([
+            'account_status' => 0
+        ], $request['seller_id']);
+    }
 }

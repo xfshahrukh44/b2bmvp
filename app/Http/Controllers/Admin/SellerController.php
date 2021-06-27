@@ -82,9 +82,7 @@ class SellerController extends Controller
         // assign seller role
         $seller->assignRole('seller');
 
-        $sellers = $this->sellerService->all();
-
-        return view('admin.admin', compact('sellers'));
+        return $this->index();
     }
 
     public function edit_seller($slug)
@@ -141,7 +139,7 @@ class SellerController extends Controller
         // update seller
         $seller = ($this->sellerService->update($req, $seller->id))['seller']['seller'];
 
-        return $this->edit_seller($seller->slug);
+        return $this->index();
     }
 
     public function approve_seller(Request $request)

@@ -23,6 +23,13 @@ class SellerController extends Controller
         $this->middleware('auth:admin');
     }
 
+    public function index()
+    {
+        $sellers = $this->sellerService->paginate(10);
+        
+        return view('admin.seller.index', compact('sellers'));
+    }
+
     public function add_seller()
     {
         return view('admin.seller.add_seller');

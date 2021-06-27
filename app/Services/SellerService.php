@@ -9,16 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class SellerService extends SellerRepository
 {
-    public function paginate($pagination)
-    {
-        try {
-            return $this->model::orderBy('created_at', 'DESC')->paginate($pagination);
-        }
-        catch (\Exception $exception) {
-            throw new AllSellerException($exception->getMessage());
-        }
-    }
-
     public function search_sellers($query)
     {
         // foreign fields

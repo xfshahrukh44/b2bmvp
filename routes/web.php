@@ -42,6 +42,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
         Route::get('/', 'DashboardController@index');
 
         // seller
+        Route::get('/sellers', 'SellerController@index')->name('seller_index');
         Route::get('/add_seller', 'SellerController@add_seller')->name('add_seller');
         Route::post('/create_seller', 'SellerController@create_seller')->name('create_seller');
         Route::get('/approve_seller', 'SellerController@approve_seller')->name('approve_seller');

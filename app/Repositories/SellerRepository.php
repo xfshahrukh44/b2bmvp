@@ -112,4 +112,14 @@ abstract class SellerRepository implements RepositoryInterface
             throw new AllSellerException($exception->getMessage());
         }
     }
+    
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::orderBy('created_at', 'DESC')->paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllSellerException($exception->getMessage());
+        }
+    }
 }

@@ -15,8 +15,6 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $sellers = $this->sellerService->all();
-
-        return view('admin.admin', compact('sellers'));
+        return view('admin.admin');
     }
 }

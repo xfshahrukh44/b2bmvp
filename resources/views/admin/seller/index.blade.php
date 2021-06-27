@@ -27,7 +27,8 @@
                                             {{$seller->first_name . (($seller->last_name) ? (' ' . $seller->last_name) : (''))}}
                                             
                                             <!-- approval badges -->
-                                            <div class="bade_approval_wrapper">
+                                            <div class="bade_approval_wrapper float-right">
+                                                &nbsp|
                                                 @if($seller->is_approved === NULL)
                                                     <span class="badge badge-secondary badge_approval">Pending approval</span>
                                                 @endif
@@ -39,7 +40,7 @@
                                                 @endif
                                             </div>
                                             <!-- status badges -->
-                                            <div class="badge_status_wrapper">
+                                            <div class="badge_status_wrapper float-right">
                                                 @if($seller->account_status === 1)
                                                     <span class="badge badge-primary badge_status">Active</span>
                                                 @endif
@@ -49,20 +50,34 @@
                                             </div>
                                         </td>
                                         <td width="200">
-                                            @if($seller->is_approved === NULL)
-                                                <button class="btn btn-success btn-sm btn_approve_seller" data-id="{{$seller->id}}">Approve</button>
-                                                <button class="btn btn-danger btn-sm btn_reject_seller" data-id="{{$seller->id}}">Reject</button>
-                                            @endif
-                                            <br>
-                                            <br>
-                                            <!-- activate -->
-                                            <button class="btn btn-primary btn-sm btn_activate_seller" data-id="{{$seller->id}}" @if($seller->account_status === 1) hidden @endif>
-                                                Activate account
-                                            </button>
-                                            <!-- deactivate -->
-                                            <button class="btn btn-secondary btn-sm btn_deactivate_seller" data-id="{{$seller->id}}" @if($seller->account_status === 0) hidden @endif>
-                                                Deactivate account
-                                            </button>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <!-- approve -->
+                                                    @if($seller->is_approved === NULL)
+                                                        <a class="dropdown-item btn_approve_seller" href="#" data-id="{{$seller->id}}" style="color:green;">
+                                                            Approve
+                                                        </a>
+                                                    @endif
+                                                    <!-- reject -->
+                                                    @if($seller->is_approved === NULL)
+                                                        <a class="dropdown-item btn_reject_seller" href="#" data-id="{{$seller->id}}" style="color:red;">
+                                                            Reject
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                    @endif
+                                                    <!-- activate -->
+                                                    <a class="dropdown-item btn_activate_seller text-primary" data-id="{{$seller->id}}" href="#" @if($seller->account_status === 1) hidden @endif>
+                                                        Activate account
+                                                    </a>
+                                                    <!-- deactivate -->
+                                                    <a class="dropdown-item btn_deactivate_seller text-secondary" data-id="{{$seller->id}}" href="#" @if($seller->account_status === 0) hidden @endif>
+                                                        Deactivate account
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -96,6 +111,7 @@
                         $('.btn_approve_seller').hide();
                         $('.btn_reject_seller').hide();
                         $('.badge_approval').remove();
+                        $('.dropdown-divider').remove();
                         $('.bade_approval_wrapper').append('<span class="badge badge-success badge_approval">Approved</span>');
                     }
                 }
@@ -116,6 +132,7 @@
                         $('.btn_approve_seller').hide();
                         $('.btn_reject_seller').hide();
                         $('.badge_approval').remove();
+                        $('.dropdown-divider').remove();
                         $('.bade_approval_wrapper').append('<span class="badge badge-danger badge_approval">Rejected</span>');
                     }
                 }

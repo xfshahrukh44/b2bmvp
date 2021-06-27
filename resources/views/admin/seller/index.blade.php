@@ -76,6 +76,10 @@
                                                     <a class="dropdown-item btn_deactivate_seller text-secondary" data-id="{{$seller->id}}" href="#" @if($seller->account_status === 0) hidden @endif>
                                                         Deactivate account
                                                     </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="{{route('edit_seller', $seller->slug)}}">
+                                                        Edit
+                                                    </a>
                                                 </div>
                                             </div>
                                         </td>
@@ -100,6 +104,7 @@
         // on btn_approve_seller click
         $('.btn_approve_seller').on('click', function(){
             var seller_id = $(this).data('id');
+            var parent = $(this).parent().parent().parent().parent();
             $.ajax({
                 url: '<?php echo(route("approve_seller")); ?>',
                 type: 'GET',
@@ -108,11 +113,11 @@
                 async: false,
                 success: function (data) {
                     if(data.seller.success == true){
-                        $('.btn_approve_seller').hide();
-                        $('.btn_reject_seller').hide();
-                        $('.badge_approval').remove();
-                        $('.dropdown-divider').remove();
-                        $('.bade_approval_wrapper').append('<span class="badge badge-success badge_approval">Approved</span>');
+                        parent.find('.btn_approve_seller').hide();
+                        parent.find('.btn_reject_seller').hide();
+                        parent.find('.badge_approval').remove();
+                        parent.find('.dropdown-divider').remove();
+                        parent.find('.bade_approval_wrapper').append('<span class="badge badge-success badge_approval">Approved</span>');
                     }
                 }
             });
@@ -121,6 +126,7 @@
         /// on btn_reject_seller click
         $('.btn_reject_seller').on('click', function(){
             var seller_id = $(this).data('id');
+            var parent = $(this).parent().parent().parent().parent();
             $.ajax({
                 url: '<?php echo(route("reject_seller")); ?>',
                 type: 'GET',
@@ -129,11 +135,11 @@
                 async: false,
                 success: function (data) {
                     if(data.seller.success == true){
-                        $('.btn_approve_seller').hide();
-                        $('.btn_reject_seller').hide();
-                        $('.badge_approval').remove();
-                        $('.dropdown-divider').remove();
-                        $('.bade_approval_wrapper').append('<span class="badge badge-danger badge_approval">Rejected</span>');
+                        parent.find('.btn_approve_seller').hide();
+                        parent.find('.btn_reject_seller').hide();
+                        parent.find('.badge_approval').remove();
+                        parent.find('.dropdown-divider').remove();
+                        parent.find('.bade_approval_wrapper').append('<span class="badge badge-danger badge_approval">Rejected</span>');
                     }
                 }
             });
@@ -142,6 +148,7 @@
         // on btn_activate_seller click
         $('.btn_activate_seller').on('click', function(){
             var seller_id = $(this).data('id');
+            var parent = $(this).parent().parent().parent().parent();
             $.ajax({
                 url: '<?php echo(route("activate_seller")); ?>',
                 type: 'GET',
@@ -150,10 +157,10 @@
                 async: false,
                 success: function (data) {
                     if(data.seller.success == true){
-                        $('.btn_activate_seller').prop('hidden', true);
-                        $('.btn_deactivate_seller').prop('hidden', false);
-                        $('.badge_status').remove();
-                        $('.badge_status_wrapper').append('<span class="badge badge-primary badge_status">Active</span>');
+                        parent.find('.btn_activate_seller').prop('hidden', true);
+                        parent.find('.btn_deactivate_seller').prop('hidden', false);
+                        parent.find('.badge_status').remove();
+                        parent.find('.badge_status_wrapper').append('<span class="badge badge-primary badge_status">Active</span>');
                     }
                 }
             });
@@ -162,6 +169,7 @@
         // on btn_deactivate_seller click
         $('.btn_deactivate_seller').on('click', function(){
             var seller_id = $(this).data('id');
+            var parent = $(this).parent().parent().parent().parent();
             $.ajax({
                 url: '<?php echo(route("deactivate_seller")); ?>',
                 type: 'GET',
@@ -170,10 +178,10 @@
                 async: false,
                 success: function (data) {
                     if(data.seller.success == true){
-                        $('.btn_deactivate_seller').prop('hidden', true);
-                        $('.btn_activate_seller').prop('hidden', false);
-                        $('.badge_status').remove();
-                        $('.badge_status_wrapper').append('<span class="badge badge-secondary badge_status">Inactive</span>');
+                        parent.find('.btn_deactivate_seller').prop('hidden', true);
+                        parent.find('.btn_activate_seller').prop('hidden', false);
+                        parent.find('.badge_status').remove();
+                        parent.find('.badge_status_wrapper').append('<span class="badge badge-secondary badge_status">Inactive</span>');
                     }
                 }
             });

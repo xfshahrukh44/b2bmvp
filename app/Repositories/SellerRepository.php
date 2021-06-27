@@ -102,6 +102,28 @@ abstract class SellerRepository implements RepositoryInterface
 
         }
     }
+
+    public function find_by_slug($slug)
+    {
+        try 
+        {
+            $seller = $this->model::where('slug', $slug)->first();
+            if(!$seller)
+            {
+                return [
+                    'success' => false,
+                    'message' => 'Could`nt find seller',
+                ];
+            }
+            return [
+                'success' => true,
+                'seller' => $seller,
+            ];
+        }
+        catch (\Exception $exception) {
+
+        }
+    }
     
     public function all()
     {

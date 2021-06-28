@@ -171,4 +171,11 @@ class SellerController extends Controller
             'account_status' => 0
         ], $request['seller_id']);
     }
+
+    public function search_sellers(Request $request)
+    {
+        $sellers = $this->sellerService->search_sellers($request->all(), $pagination = 10);
+        
+        return view('admin.seller.index', compact('sellers'))->with('search_filters', $request->all());
+    }
 }

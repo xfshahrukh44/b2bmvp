@@ -144,4 +144,31 @@ abstract class SellerRepository implements RepositoryInterface
             throw new AllSellerException($exception->getMessage());
         }
     }
+
+    public function search_sellers($query, $pagination)
+    {
+        $sellers = new Seller;
+
+        // first_name
+        if(isset($query['first_name'])){
+            $sellers =$sellers->where('first_name', 'LIKE', '%'. $query['first_name'].'%');
+        }
+
+        // last_name
+        if(isset($query['last_name'])){
+            $sellers =$sellers->where('last_name', 'LIKE', '%'. $query['last_name'].'%');
+        }
+
+        // company_name
+        if(isset($query['company_name'])){
+            $sellers =$sellers->where('company_name', 'LIKE', '%'. $query['company_name'].'%');
+        }
+
+        // order_by
+        if(isset($query['order_by'])){
+            $sellers =$sellers->orderBy('created_at', $query['order_by']);
+        }
+
+        return $sellers->paginate($pagination);
+    }
 }

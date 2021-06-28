@@ -51,6 +51,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
         Route::get('/reject_seller', 'SellerController@reject_seller')->name('reject_seller');
         Route::get('/activate_seller', 'SellerController@activate_seller')->name('activate_seller');
         Route::get('/deactivate_seller', 'SellerController@deactivate_seller')->name('deactivate_seller');
+        Route::get('/search_sellers', 'SellerController@search_sellers')->name('search_sellers');
 
         // shipping_region
         Route::post('/create_shipping_region', 'ShippingRegionController@create_shipping_region')->name('create_shipping_region');

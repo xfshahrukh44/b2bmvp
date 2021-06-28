@@ -8,18 +8,42 @@
         <div class="success_bearer" hidden data-success="0" data-message=""></div>
     @endif
 
+    <!-- search_filters bearer -->
+    @if (session()->has('search_filters'))
+        <div class="search_filters_bearer" hidden data-success="1" data-message="{{session()->get('search_filters')}}"></div>
+    @else
+        <div class="search_filters_bearer" hidden data-success="0" data-message=""></div>
+    @endif
+
     <div class="container">
         <div class="row col-md-12">
             <!-- Sellers -->
             <div class="col-md-12 mt-4">
                 <div class="card">
                     <div class="card-header">
-                        <div class="float-left">Sellers</div>
-                        <div class="float-right"><a type="button" class="btn btn-sm btn-secondary btn_add_seller" href="{{route('add_seller')}}">Add Seller</a></div>
+                        <div class="float-left">
+                            Sellers
+                        </div>
+                        <div class="float-right">
+                            <a type="button" class="btn btn-sm btn-secondary btn_add_seller" href="{{route('add_seller')}}">Add Seller</a>
+                        </div>
                     </div>
 
                     <div class="card-body">
                         <table class="table table-sm table-bordered table-striped">
+                            <!-- search form -->
+                            <form method="POST" action="{{route('search_sellers')}}" class="form_search_sellers">
+                                @method('GET')
+                                <input type="text" name="first_name" placeholder="First name" class="first_name form-control form-control-sm col-md-3 mb-2 m-1" style="display:inline;">
+                                <input type="text" name="last_name" placeholder="Last name" class="last_name form-control form-control-sm col-md-3 m-1" style="display:inline;">
+                                <input type="text" name="company_name" placeholder="Company name" class="company_name form-control form-control-sm col-md-3 m-1" style="display:inline;">
+                                <select name="order_by" class="order_by form-control form-control-sm col-md-2 m-1" style="display:inline;">
+                                    <option value="">Sort by</option>
+                                    <option value="ASC">Oldest</option>
+                                    <option value="DESC">Recent</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm col-md-0" style="display:inline;"><i class="fas fa-search"></i></button>
+                            </form>
                             <thead>
                                 <tr>
                                     <th>First name</th>
@@ -220,6 +244,9 @@
         $(document).ready(function(){
             if($('.success_bearer').data('success') == 1){
                 toastr.success($('.success_bearer').data('message'));
+            }
+            if($('.search_filters').data('success') == 1){
+                console.log('.search_filters').data('message');
             }
         });
     </script>

@@ -61,7 +61,7 @@
                                         </td>
                                         <!-- actions -->
                                         <td width="50" class="text-center">
-                                            <a class="btn_update_shipping_region text-primary" href="#" data-id="{{$shipping_region->id}}"><i class="fas fa-pen"></i></a>
+                                            <a class="btn_update_shipping_region text-success" href="#" data-id="{{$shipping_region->id}}"><i class="fas fa-check-double"></i></a>
                                             <a class="btn_remove_shipping_region text-danger" href="#" data-id="{{$shipping_region->id}}"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -140,7 +140,6 @@
                 async: false,
                 data:formData,
                 success:function(data) {
-                    console.log(data);
                     var shipping_region = data;
                     $('#addShippingRegionModal .shipping_region_title').val('');
                     $('#addShippingRegionModal .shipping_region_time').val('');
@@ -160,7 +159,7 @@
                                                             </td>
                                                             <!-- actions -->
                                                             <td width="50" class="text-center">
-                                                                <a class="btn_update_shipping_region text-primary" href="#" data-id="`+shipping_region.id+`"><i class="fas fa-pen"></i></a>
+                                                                <a class="btn_update_shipping_region text-success" href="#" data-id="`+shipping_region.id+`"><i class="fas fa-check-double"></i></a>
                                                                 <a class="btn_remove_shipping_region text-danger" href="#" data-id="`+shipping_region.id+`"><i class="fas fa-trash"></i></a>
                                                             </td>
                                                         </tr>`);
@@ -187,7 +186,7 @@
         });
 
         // on btn_update_shipping_region click
-        $('.btn_update_shipping_region').on('click', function(){
+        $('.tbody_shipping_region').on('click', '.btn_update_shipping_region', function(){
             var id = $(this).data('id');
             var url = `<?php echo(route('update_shipping_region', 'id')); ?>`;
             url = url.replace('id', id);
@@ -223,7 +222,7 @@
         });
 
         // on btn_remove_shipping_region click
-        $('.btn_remove_shipping_region').on('click', function(){
+        $('.tbody_shipping_region').on('click', '.btn_remove_shipping_region', function(){
             var parent = $(this).parent().parent();
             var id = $(this).data('id');
             var url = `<?php echo(route('destroy_shipping_region', 'id')); ?>`;

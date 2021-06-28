@@ -43,8 +43,9 @@ class SellerController extends Controller
             'profile_picture' => 'sometimes',
             'email' => 'required|email|unique:sellers',
             'phone' => 'required|unique:sellers',
-            'password' => 'required',
+            'password' => 'required|string|min:4|confirmed',
             'company_name' => 'string|required|max:100',
+            'company_address' => 'string|required|max:100',
             'company_logo' => 'sometimes',
             'account_status' => 'required',
             'is_approved' => 'sometimes',
@@ -76,13 +77,13 @@ class SellerController extends Controller
         // create seller
         $seller = ($this->sellerService->create($req))['seller']['seller'];
 
+        // assign seller role
+        $seller->assignRole('seller');
+        
         // fire registration event
         event(new Registered($seller));
 
-        // assign seller role
-        $seller->assignRole('seller');
-
-        return $this->index();
+        return redirect()->route('seller_index')->with('success', 'Seller added.');
     }
 
     public function edit_seller($slug)
@@ -102,8 +103,9 @@ class SellerController extends Controller
             'profile_picture' => 'sometimes',
             'email' => 'sometimes|email|unique:sellers,email,' . $seller->id,
             'phone' => 'sometimes|unique:sellers,phone,' . $seller->id,
-            'password' => 'sometimes',
+            'password' => 'nullable|string|min:4|confirmed',
             'company_name' => 'string|sometimes|max:100',
+            'company_address' => 'string|sometimes|max:100',
             'company_logo' => 'sometimes',
             'account_status' => 'sometimes',
             'is_approved' => 'sometimes',
@@ -139,7 +141,7 @@ class SellerController extends Controller
         // update seller
         $seller = ($this->sellerService->update($req, $seller->id))['seller']['seller'];
 
-        return $this->index();
+        return redirect()->route('seller_index')->with('success', 'Seller updated.');
     }
 
     public function approve_seller(Request $request)

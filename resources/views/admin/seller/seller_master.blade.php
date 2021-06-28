@@ -35,7 +35,7 @@
 </div>
 
 <!-- Email | email -->
-<div class="form-group col-md-4">
+<div class="form-group col-md-3">
     <label>Email</label>
     <input type="email" class="form-control email @error('email') is-invalid @enderror" name="email" value="{{ old('email', $seller->email ?? '') }}">
 
@@ -47,7 +47,7 @@
 </div>
 
 <!-- Phone | phone -->
-<div class="form-group col-md-4">
+<div class="form-group col-md-3">
     <label>Phone</label>
     <input type="text" class="form-control phone @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone', $seller->phone ?? '') }}">
 
@@ -59,9 +59,9 @@
 </div>
 
 <!-- Password | password -->
-<div class="form-group col-md-4">
+<div class="form-group col-md-3">
     <label>Password</label>
-    <input type="password" class="form-control password @error('password') is-invalid @enderror" name="password">
+    <input type="password" class="form-control password @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
     @error('password')
         <span class="invalid-feedback" role="alert">
@@ -70,8 +70,14 @@
     @enderror
 </div>
 
+<!-- Confirm Password | password_confirmation -->
+<div class="form-group col-md-3">
+    <label>Confirm Password</label>
+    <input type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+</div>
+
 <!-- Company Name | company_name -->
-<div class="form-group col-md-6">
+<div class="form-group col-md-4">
     <label>Company Name</label>
     <input type="text" class="form-control company_name @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name', $seller->company_name ?? '') }}">
 
@@ -82,8 +88,20 @@
     @enderror
 </div>
 
+<!-- Company Address | company_address -->
+<div class="form-group col-md-4">
+    <label>Company Address</label>
+    <input type="text" class="form-control company_address @error('company_address') is-invalid @enderror" name="company_address" value="{{ old('company_address', $seller->company_address ?? '') }}">
+
+    @error('company_address')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>
+
 <!-- Company Logo | company_logo -->
-<div class="form-group col-md-6">
+<div class="form-group col-md-4">
     <label for="">Company Logo</label>
     <input type="file" class="form-control company_logo @error('company_logo') is-invalid @enderror" name="company_logo" value="{{ old('company_logo', $seller->company_logo ?? '') }}">
 

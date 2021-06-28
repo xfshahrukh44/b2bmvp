@@ -1,6 +1,13 @@
 @extends('admin.layouts.auth')
     
 @section('content')
+    <!-- success bearer -->
+    @if (session()->has('success'))
+        <div class="success_bearer" hidden data-success="1" data-message="{{session()->get('success')}}"></div>
+    @else
+        <div class="success_bearer" hidden data-success="0" data-message=""></div>
+    @endif
+
     <div class="container">
         <div class="row col-md-12">
             <!-- Sellers -->
@@ -15,20 +22,33 @@
                         <table class="table table-sm table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Company name</th>
+                                    <th>Account status</th>
+                                    <th>Created at</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($sellers as $seller)
                                     <tr>
-                                        <td class="badge_wrapper">
-                                            <!-- name -->
-                                            {{$seller->first_name . (($seller->last_name) ? (' ' . $seller->last_name) : (''))}}
-                                            
+                                        <td>{{$seller->first_name}}</td>
+                                        <td>{{$seller->last_name}}</td>
+                                        <td>{{$seller->company_name}}</td>
+                                        <td>
+                                            <!-- status badges -->
+                                            <div class="badge_status_wrapper" style="display:inline;">
+                                                @if($seller->account_status === 1)
+                                                    <span class="badge badge-primary badge_status">Active</span>
+                                                @endif
+                                                @if($seller->account_status === 0)
+                                                    <span class="badge badge-secondary badge_status">Inactive</span>
+                                                @endif
+                                            </div>
+                                            |
                                             <!-- approval badges -->
-                                            <div class="bade_approval_wrapper float-right">
-                                                &nbsp|
+                                            <div class="bade_approval_wrapper" style="display:inline;">
                                                 @if($seller->is_approved === NULL)
                                                     <span class="badge badge-secondary badge_approval">Pending approval</span>
                                                 @endif
@@ -39,17 +59,9 @@
                                                     <span class="badge badge-danger badge_approval">Rejected</span>
                                                 @endif
                                             </div>
-                                            <!-- status badges -->
-                                            <div class="badge_status_wrapper float-right">
-                                                @if($seller->account_status === 1)
-                                                    <span class="badge badge-primary badge_status">Active</span>
-                                                @endif
-                                                @if($seller->account_status === 0)
-                                                    <span class="badge badge-secondary badge_status">Inactive</span>
-                                                @endif
-                                            </div>
                                         </td>
-                                        <td width="200">
+                                        <td>{{return_date($seller->created_at)}}</td>
+                                        <td width="50">
                                             <div class="btn-group">
                                                 <button type="button" class="btn dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-cog"></i>
@@ -112,12 +124,16 @@
                 dataType: 'JSON',
                 async: false,
                 success: function (data) {
-                    if(data.seller.success == true){
+                    if(data.success == true){
                         parent.find('.btn_approve_seller').hide();
                         parent.find('.btn_reject_seller').hide();
                         parent.find('.badge_approval').remove();
                         parent.find('.dropdown-divider').remove();
                         parent.find('.bade_approval_wrapper').append('<span class="badge badge-success badge_approval">Approved</span>');
+                        toastr.success('Account approved.');
+                    }
+                    else{
+                        toastr.error(`Could'nt approve account`);
                     }
                 }
             });
@@ -134,12 +150,16 @@
                 dataType: 'JSON',
                 async: false,
                 success: function (data) {
-                    if(data.seller.success == true){
+                    if(data.success == true){
                         parent.find('.btn_approve_seller').hide();
                         parent.find('.btn_reject_seller').hide();
                         parent.find('.badge_approval').remove();
                         parent.find('.dropdown-divider').remove();
                         parent.find('.bade_approval_wrapper').append('<span class="badge badge-danger badge_approval">Rejected</span>');
+                        toastr.success('Account rejected.');
+                    }
+                    else{
+                        toastr.error(`Could'nt reject account`);
                     }
                 }
             });
@@ -156,11 +176,15 @@
                 dataType: 'JSON',
                 async: false,
                 success: function (data) {
-                    if(data.seller.success == true){
+                    if(data.success == true){
                         parent.find('.btn_activate_seller').prop('hidden', true);
                         parent.find('.btn_deactivate_seller').prop('hidden', false);
                         parent.find('.badge_status').remove();
                         parent.find('.badge_status_wrapper').append('<span class="badge badge-primary badge_status">Active</span>');
+                        toastr.success('Account activated.');
+                    }
+                    else{
+                        toastr.error('Account activation failed.');
                     }
                 }
             });
@@ -177,11 +201,15 @@
                 dataType: 'JSON',
                 async: false,
                 success: function (data) {
-                    if(data.seller.success == true){
+                    if(data.success == true){
                         parent.find('.btn_deactivate_seller').prop('hidden', true);
                         parent.find('.btn_activate_seller').prop('hidden', false);
                         parent.find('.badge_status').remove();
                         parent.find('.badge_status_wrapper').append('<span class="badge badge-secondary badge_status">Inactive</span>');
+                        toastr.success('Account deactivated.');
+                    }
+                    else{
+                        toastr.error('Account deactivation failed.');
                     }
                 }
             });
@@ -190,7 +218,9 @@
     
     <script>
         $(document).ready(function(){
-            // alert('asd');
+            if($('.success_bearer').data('success') == 1){
+                toastr.success($('.success_bearer').data('message'));
+            }
         });
     </script>
 @endsection

@@ -9,7 +9,7 @@ function return_date($date)
 }
 
 function get_slug($string){
-    return strtolower(preg_replace('/\s+/', '_', $string));
+    return strtolower(preg_replace('/\s+/', '-', $string));
 }
 
 function get_seller_slug($query){
@@ -28,7 +28,7 @@ function get_seller_slug($query){
     $sellers = Seller::where('slug', $slug)->get();
     // if not unique, append id
     if(count($sellers) > 0){
-        $slug .= '_' . $query['id'];
+        $slug .= '-' . $query['id'];
     }
 
     return $slug;

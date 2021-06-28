@@ -19,6 +19,7 @@ class CreateSellersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('profile_picture')->nullable();
             $table->string('company_name')->nullable();
+            $table->string('company_address')->nullable();
             $table->string('company_logo')->nullable();
             $table->integer('account_status')->nullable()->default(0);
             $table->integer('is_approved')->nullable();

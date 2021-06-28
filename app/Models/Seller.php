@@ -22,6 +22,7 @@ class Seller extends Authenticatable implements MustVerifyEmail
         'last_name',
         'profile_picture',
         'company_name',
+        'company_address',
         'company_logo',
         'account_status',
         'is_approved',

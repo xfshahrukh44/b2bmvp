@@ -58,4 +58,9 @@ class Seller extends Authenticatable implements MustVerifyEmail
             $query->saveQuietly();
         });
     }
+
+    public function shipping_regions()
+    {
+        return $this->hasMany('App\Models\ShippingRegion');
+    }
 }

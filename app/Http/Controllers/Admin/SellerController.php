@@ -23,9 +23,14 @@ class SellerController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $sellers = $this->sellerService->paginate(10);
+        if(!$request->has('search')){
+            $sellers = $this->sellerService->paginate(10);
+        }
+        else{
+            $sellers = $this->search_sellers($request->all());
+        }
         
         return view('admin.seller.index', compact('sellers'));
     }
@@ -182,10 +187,10 @@ class SellerController extends Controller
         ], $request['seller_id']);
     }
 
-    public function search_sellers(Request $request)
+    public function search_sellers($query)
     {
-        $sellers = $this->sellerService->search_sellers($request->all(), $pagination = 10);
+        $sellers = $this->sellerService->search_sellers($query, $pagination = 10);
         
-        return view('admin.seller.index', compact('sellers'))->with('search_filters', $request->all());
+        return $sellers;
     }
 }

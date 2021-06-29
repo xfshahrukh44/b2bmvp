@@ -64,4 +64,9 @@ class Seller extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\ShippingRegion');
     }
+
+    public function seller_documents()
+    {
+        return $this->hasMany('App\Models\SellerDocument');
+    }
 }

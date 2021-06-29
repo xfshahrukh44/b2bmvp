@@ -2,29 +2,29 @@
 
 namespace App\Repositories;
 
-use App\Exceptions\Seller\AllSellerException;
-use App\Exceptions\Seller\CreateSellerException;
-use App\Exceptions\Seller\UpdateSellerException;
-use App\Exceptions\Seller\DeleteSellerException;
-use App\Models\Seller;
+use App\Exceptions\SellerDocument\AllSellerDocumentException;
+use App\Exceptions\SellerDocument\CreateSellerDocumentException;
+use App\Exceptions\SellerDocument\UpdateSellerDocumentException;
+use App\Exceptions\SellerDocument\DeleteSellerDocumentException;
+use App\Models\SellerDocument;
 
-abstract class SellerRepository implements RepositoryInterface
+abstract class SellerDocumentRepository implements RepositoryInterface
 {
     private $model;
     
-    public function __construct(Seller $seller)
+    public function __construct(SellerDocument $seller_document)
     {
-        $this->model = $seller;
+        $this->model = $seller_document;
     }
     
     public function create(array $data)
     {
         try 
         {    
-            $seller = $this->model->create($data);
+            $seller_document = $this->model->create($data);
             
             return [
-                'seller' => $this->find($seller->id)
+                'seller_document' => $this->find($seller_document->id)
             ];
         }
         catch (\Exception $exception) {
@@ -39,7 +39,7 @@ abstract class SellerRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find seller',
+                    'message' => 'Could`nt find seller_document',
                 ];
             }
 
@@ -48,11 +48,11 @@ abstract class SellerRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Deleted successfully',
-                'seller' => $temp,
+                'seller_document' => $temp,
             ];
         }
         catch (\Exception $exception) {
-            throw new DeleteSellerException($exception->getMessage());
+            throw new DeleteSellerDocumentException($exception->getMessage());
         }
     }
     
@@ -63,7 +63,7 @@ abstract class SellerRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find seller',
+                    'message' => 'Could`nt find seller_document',
                 ];
             }
 
@@ -73,11 +73,11 @@ abstract class SellerRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
-                'seller' => $this->find($temp->id),
+                'seller_document' => $this->find($temp->id),
             ];
         }
         catch (\Exception $exception) {
-            throw new UpdateSellerException($exception->getMessage());
+            throw new UpdateSellerDocumentException($exception->getMessage());
         }
     }
     
@@ -85,17 +85,17 @@ abstract class SellerRepository implements RepositoryInterface
     {
         try 
         {
-            $seller = $this->model::find($id);
-            if(!$seller)
+            $seller_document = $this->model::find($id);
+            if(!$seller_document)
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find seller',
+                    'message' => 'Could`nt find seller_document',
                 ];
             }
             return [
                 'success' => true,
-                'seller' => $seller,
+                'seller_document' => $seller_document,
             ];
         }
         catch (\Exception $exception) {
@@ -107,17 +107,17 @@ abstract class SellerRepository implements RepositoryInterface
     {
         try 
         {
-            $seller = $this->model::where('slug', $slug)->first();
-            if(!$seller)
+            $seller_document = $this->model::where('slug', $slug)->first();
+            if(!$seller_document)
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find seller',
+                    'message' => 'Could`nt find seller_document',
                 ];
             }
             return [
                 'success' => true,
-                'seller' => $seller,
+                'seller_document' => $seller_document,
             ];
         }
         catch (\Exception $exception) {
@@ -131,7 +131,7 @@ abstract class SellerRepository implements RepositoryInterface
             return $this->model::all();
         }
         catch (\Exception $exception) {
-            throw new AllSellerException($exception->getMessage());
+            throw new AllSellerDocumentException($exception->getMessage());
         }
     }
     
@@ -141,29 +141,34 @@ abstract class SellerRepository implements RepositoryInterface
             return $this->model::orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
-            throw new AllSellerException($exception->getMessage());
+            throw new AllSellerDocumentException($exception->getMessage());
         }
     }
 
-    public function search_sellers($query, $pagination)
+    public function search_seller_documents($query, $pagination)
     {
-        $sellers = new Seller;
+        $seller_documents = new SellerDocument;
 
-        // name
-        if(isset($query['name'])){
-            $sellers = $sellers->where('first_name', 'LIKE', '%'. $query['name'].'%')->orWhere('last_name', 'LIKE', '%'. $query['name'].'%');
+        // first_name
+        if(isset($query['first_name'])){
+            $seller_documents =$seller_documents->where('first_name', 'LIKE', '%'. $query['first_name'].'%');
+        }
+
+        // last_name
+        if(isset($query['last_name'])){
+            $seller_documents =$seller_documents->where('last_name', 'LIKE', '%'. $query['last_name'].'%');
         }
 
         // company_name
         if(isset($query['company_name'])){
-            $sellers = $sellers->where('company_name', 'LIKE', '%'. $query['company_name'].'%');
+            $seller_documents =$seller_documents->where('company_name', 'LIKE', '%'. $query['company_name'].'%');
         }
 
         // order_by
         if(isset($query['order_by'])){
-            $sellers = $sellers->orderBy('created_at', $query['order_by']);
+            $seller_documents =$seller_documents->orderBy('created_at', $query['order_by']);
         }
 
-        return $sellers->paginate($pagination);
+        return $seller_documents->paginate($pagination);
     }
 }

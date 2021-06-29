@@ -32,22 +32,21 @@
                     <div class="card-body">
                         <table class="table table-sm table-bordered table-striped">
                             <!-- search form -->
-                            <form method="POST" action="{{route('search_sellers')}}" class="form_search_sellers">
+                            <form method="GET" action="{{route('seller_index')}}" class="form_search_sellers">
                                 @method('GET')
-                                <input type="text" name="first_name" placeholder="First name" class="first_name form-control form-control-sm col-md-3 mb-2 m-1" style="display:inline;">
-                                <input type="text" name="last_name" placeholder="Last name" class="last_name form-control form-control-sm col-md-3 m-1" style="display:inline;">
-                                <input type="text" name="company_name" placeholder="Company name" class="company_name form-control form-control-sm col-md-3 m-1" style="display:inline;">
-                                <select name="order_by" class="order_by form-control form-control-sm col-md-2 m-1" style="display:inline;">
+                                <input type="text" name="search" value="1" hidden>
+                                <input type="text" name="name" placeholder="Name" class="search_name form-control form-control-sm col-md-4 mb-2 m-1" style="display:inline;">
+                                <input type="text" name="company_name" placeholder="Company name" class="search_company_name form-control form-control-sm col-md-4 m-1" style="display:inline;">
+                                <select name="order_by" class="search_order_by form-control form-control-sm col-md-3 m-1" style="display:inline;">
                                     <option value="">Sort by</option>
                                     <option value="ASC">Oldest</option>
                                     <option value="DESC">Recent</option>
                                 </select>
-                                <button type="submit" class="btn btn-primary btn-sm col-md-0" style="display:inline;"><i class="fas fa-search"></i></button>
+                                <button type="submit" class="btn btn-primary btn-sm col-md-0 ml-3" style="display:inline;"><i class="fas fa-search"></i></button>
                             </form>
                             <thead>
                                 <tr>
-                                    <th>First name</th>
-                                    <th>Last name</th>
+                                    <th>Name</th>
                                     <th>Company name</th>
                                     <th>Account status</th>
                                     <th>Created at</th>
@@ -57,8 +56,7 @@
                             <tbody>
                                 @foreach($sellers as $seller)
                                     <tr>
-                                        <td>{{$seller->first_name}}</td>
-                                        <td>{{$seller->last_name}}</td>
+                                        <td>{{$seller->first_name . ' ' . $seller->last_name}}</td>
                                         <td>{{$seller->company_name}}</td>
                                         <td>
                                             <!-- status badges -->
@@ -93,23 +91,23 @@
                                                 <div class="dropdown-menu">
                                                     <!-- approve -->
                                                     @if($seller->is_approved === NULL)
-                                                        <a class="dropdown-item btn_approve_seller" href="#" data-id="{{$seller->id}}" style="color:green;">
+                                                        <a class="dropdown-item btn_approve_seller" href="javascript:void(0)" data-id="{{$seller->id}}" style="color:green;">
                                                             Approve
                                                         </a>
                                                     @endif
                                                     <!-- reject -->
                                                     @if($seller->is_approved === NULL)
-                                                        <a class="dropdown-item btn_reject_seller" href="#" data-id="{{$seller->id}}" style="color:red;">
+                                                        <a class="dropdown-item btn_reject_seller" href="javascript:void(0)" data-id="{{$seller->id}}" style="color:red;">
                                                             Reject
                                                         </a>
                                                         <div class="dropdown-divider"></div>
                                                     @endif
                                                     <!-- activate -->
-                                                    <a class="dropdown-item btn_activate_seller text-primary" data-id="{{$seller->id}}" href="#" @if($seller->account_status === 1) hidden @endif>
+                                                    <a class="dropdown-item btn_activate_seller text-primary" data-id="{{$seller->id}}" href="javascript:void(0)" @if($seller->account_status === 1) hidden @endif>
                                                         Activate account
                                                     </a>
                                                     <!-- deactivate -->
-                                                    <a class="dropdown-item btn_deactivate_seller text-secondary" data-id="{{$seller->id}}" href="#" @if($seller->account_status === 0) hidden @endif>
+                                                    <a class="dropdown-item btn_deactivate_seller text-secondary" data-id="{{$seller->id}}" href="javascript:void(0)" @if($seller->account_status === 0) hidden @endif>
                                                         Deactivate account
                                                     </a>
                                                     <div class="dropdown-divider"></div>
@@ -242,11 +240,25 @@
     
     <script>
         $(document).ready(function(){
+            // alerts
             if($('.success_bearer').data('success') == 1){
                 toastr.success($('.success_bearer').data('message'));
             }
             if($('.search_filters').data('success') == 1){
                 console.log('.search_filters').data('message');
+            }
+
+            // search parameters
+            // form_search_sellers
+            console.log($('.form_search_sellers .company_name'));
+            if(getUrlParameter('name')){
+                $('.search_name').val(getUrlParameter('name'));
+            }
+            if(getUrlParameter('company_name')){
+                $('.search_company_name').val(getUrlParameter('company_name'));
+            }
+            if(getUrlParameter('order_by')){
+                $('.search_order_by').val(getUrlParameter('order_by'));
             }
         });
     </script>

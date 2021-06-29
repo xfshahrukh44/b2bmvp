@@ -55,12 +55,12 @@ return [
         
         'public_sellers' => [
             'driver' => 'local',
-            'root' => public_path('img/sellers'),
+            'root' => public_path('storage/img/sellers'),
         ],
         
         'public_companies' => [
             'driver' => 'local',
-            'root' => public_path('img/companies'),
+            'root' => public_path('storage/img/companies'),
         ],
 
     ],

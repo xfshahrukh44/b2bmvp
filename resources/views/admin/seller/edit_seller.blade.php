@@ -126,6 +126,23 @@
 @endsection
 
 @section('scripts')
+    <!-- preview image -->
+    <script>
+        function showPreview(element, cls){
+            var url = element.value;
+            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+            if (element.files && element.files[0] && (ext == "svg" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(cls).attr('src', e.target.result);
+                }
+                reader.readAsDataURL(element.files[0]);
+            }else{
+                // $('#img').attr('src', '/storage/avatars/user.png');
+            }
+        }
+    </script>
+
     <script>
         // on storeShippingRegionButton click
         $('#storeShippingRegionButton').on('click', function(e){

@@ -40,13 +40,13 @@ class SellerController extends Controller
         $request->validate([
             'first_name' => 'string|required|max:50',
             'last_name' => 'string|required|max:50',
-            'profile_picture' => 'sometimes',
+            'profile_picture' => 'mimes:jpeg,jpg,png,svg|sometimes|max:5125',
             'email' => 'required|email|unique:sellers',
-            'phone' => 'required|unique:sellers',
+            'phone' => 'required|regex:/^[0-9]+$/|unique:sellers',
             'password' => 'required|string|min:4|confirmed',
             'company_name' => 'string|required|max:100',
             'company_address' => 'string|required|max:100',
-            'company_logo' => 'sometimes',
+            'company_logo' => 'mimes:jpeg,jpg,png,svg|sometimes|max:5125',
             'account_status' => 'required',
             'is_approved' => 'sometimes',
         ]);
@@ -70,6 +70,11 @@ class SellerController extends Controller
 
         // password hashing
         $req['password'] = Hash::make($req['password']);
+
+        // phone number
+        if(isset($req['phone'])){
+            $req['phone'] = '+92' . $req['phone'];
+        }
 
         // email_verified_at
         $req['email_verified_at'] = Carbon::now();
@@ -100,13 +105,13 @@ class SellerController extends Controller
         $request->validate([
             'first_name' => 'string|sometimes|max:50',
             'last_name' => 'string|sometimes|max:50',
-            'profile_picture' => 'sometimes',
+            'profile_picture' => 'mimes:jpeg,jpg,png,svg|sometimes|max:5125',
             'email' => 'sometimes|email|unique:sellers,email,' . $seller->id,
-            'phone' => 'sometimes|unique:sellers,phone,' . $seller->id,
+            'phone' => 'sometimes|regex:/^[0-9]+$/|unique:sellers,phone,' . $seller->id,
             'password' => 'nullable|string|min:4|confirmed',
             'company_name' => 'string|sometimes|max:100',
             'company_address' => 'string|sometimes|max:100',
-            'company_logo' => 'sometimes',
+            'company_logo' => 'mimes:jpeg,jpg,png,svg|sometimes|max:5125',
             'account_status' => 'sometimes',
             'is_approved' => 'sometimes',
         ]);
@@ -136,6 +141,11 @@ class SellerController extends Controller
         }
         else{
             unset($req['password']);
+        }
+
+        // phone number
+        if(isset($req['phone'])){
+            $req['phone'] = '+92' . $req['phone'];
         }
 
         // update seller

@@ -17,7 +17,7 @@ class TwilioController extends Controller
         $twilio = new Client($twilio_sid, $token);
         $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
-            ->create($request['phone'], "sms");
+            ->create('+92' . $request['phone'], "sms");
         return true;
     }
 
@@ -35,7 +35,7 @@ class TwilioController extends Controller
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verificationChecks
-            ->create($data['otp'], array('to' => $data['phone']));
+            ->create($data['otp'], array('to' => '+92' . $data['phone']));
         if ($verification->valid) {
             return 1;
         }

@@ -41,6 +41,30 @@ class DatabaseSeeder extends Seeder
         $admin = Admin::find(1);
         $admin->assignRole('admin');
 
+        // provinces and cities
+        DB::table('provinces')->insert([
+            'name' => 'Sindh'
+        ]);
+        DB::table('provinces')->insert([
+            'name' => 'Punjab'
+        ]);
+        DB::table('provinces')->insert([
+            'name' => 'Khyber Pakhtunkhwa'
+        ]);
+        DB::table('provinces')->insert([
+            'name' => 'Balochistan'
+        ]);
+        DB::table('provinces')->insert([
+            'name' => 'Federal'
+        ]);
+        DB::table('provinces')->insert([
+            'name' => 'Gilgit-Baltistan'
+        ]);
+        DB::table('provinces')->insert([
+            'name' => 'Azad Kashmir'
+        ]);
+        populate_cities_table();
+
         // \App\Models\User::factory(10)->create();
     }
 }

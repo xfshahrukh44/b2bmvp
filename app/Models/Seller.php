@@ -18,11 +18,13 @@ class Seller extends Authenticatable implements MustVerifyEmail
     protected $guard = 'seller';
 
     protected $fillable = [
+        'city_id',
         'first_name',
         'last_name',
         'profile_picture',
         'company_name',
         'company_address',
+        'type',
         'company_logo',
         'account_status',
         'is_approved',
@@ -68,5 +70,10 @@ class Seller extends Authenticatable implements MustVerifyEmail
     public function seller_documents()
     {
         return $this->hasMany('App\Models\SellerDocument');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\Models\City');
     }
 }

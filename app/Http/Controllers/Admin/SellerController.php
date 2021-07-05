@@ -16,6 +16,8 @@ use Carbon\Carbon;
 class SellerController extends Controller
 {
     use RegistersUsers;
+    
+    protected $sellerService;
 
     public function __construct(SellerService $sellerService)
     {

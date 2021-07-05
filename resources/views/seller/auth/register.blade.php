@@ -41,6 +41,72 @@
                             </div>
                         </div>
 
+                        <!-- Company Name | company_name -->
+                        <div class="form-group row">
+                            <label for="company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="company_name" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name">
+
+                                @error('company_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- I am a | type -->
+                        <div class="form-group row">
+                            <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('I am a') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="type" class="form-control @error('type') is-invalid @enderror type" value="{{ old('type') }}" required>
+                                    <option value="">Select type</option>
+                                    <option value="Manufacturer">Manufacturer</option>
+                                    <option value="Distributor">Distributor</option>
+                                    <option value="Seller">Seller</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Province | province_id -->
+                        <div class="form-group row">
+                            <label for="province_id" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="province_id" class="form-control @error('province_id') is-invalid @enderror province_id" value="{{ old('province_id') }}" required>
+                                    <option value="">Select Province</option>
+                                    @foreach($provinces as $province)
+                                        <option value="{{$province->id}}">{{$province->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('province_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- City | city_id -->
+                        <div class="form-group row">
+                            <label for="city_id" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="city_id" class="form-control @error('city_id') is-invalid @enderror city_id" required>
+                                    <option value="">Select City</option>
+                                </select>
+
+                                @error('city_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- E-Mail Address | email -->
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -139,6 +205,37 @@
 
 @section('scripts')
     <script>
+        $(document).ready(function(){
+            $('.province_id').select2();
+            $('.city_id').select2();
+
+            // on province_id change
+            $('.province_id').on('change', function(){
+                var id = $(this).val();
+                var url = '<?php echo(route("find_province", 'id')); ?>';
+                url = url.replace('id', id);
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: {},
+                    dataType: 'JSON',
+                    async: false,
+                    success: function (data) {
+                        var cities = data.cities;
+                        $('.city_id').html('<option value="">Select City</option>');
+                        for(var i = 0; i < cities.length; i++){
+                            var option = `<option value="`+cities[i].id+`">`+cities[i].name+`</option>`;
+                            $('.city_id').append(option);
+                        }
+                        $('.city_id').select2();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
         // global vars
         var phone = "";
         var otp = "";
@@ -213,5 +310,7 @@
                 }
             }, 1);
         });
+
+        
     </script>
 @endsection

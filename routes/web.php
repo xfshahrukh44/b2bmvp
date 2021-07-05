@@ -94,6 +94,9 @@ Route::group(['namespace' => 'App\Http\Controllers\Seller', 'prefix' => 'seller'
     Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('seller.password.reset');
     Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail')->name('seller.password.email');
     Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('seller.password.update');
+    
+    // province
+    Route::get('/province/{id}', 'ProvinceController@find')->name('find_province');
 
     Route::group(['middleware' => ['auth:seller', 'role:seller', 'verified', 'seller.is_approved', 'seller.is_active']], function(){
         Route::get('/', 'DashboardController@index');

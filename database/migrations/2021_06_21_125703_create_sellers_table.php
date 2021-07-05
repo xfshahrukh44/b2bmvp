@@ -15,12 +15,14 @@ class CreateSellersTable extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
+            $table->integer('city_id')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('profile_picture')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_address')->nullable();
             $table->string('company_logo')->nullable();
+            $table->string('type')->nullable();
             $table->integer('account_status')->nullable()->default(0);
             $table->integer('is_approved')->nullable();
             $table->string('email')->unique();
